@@ -1,4 +1,4 @@
-name = "luterraBot"
+name = "luterra-bot"
 type = "javascript"
 # wranglers does not support webpack 5
 # type = "webpack" 
