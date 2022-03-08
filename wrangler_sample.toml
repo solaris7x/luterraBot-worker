@@ -11,6 +11,9 @@ workers_dev = true
 compatibility_date = "2021-09-14"
 # compatibility_flags = []
 
+[vars]
+DISCORD_PUBLIC_KEY = "qert123longkey"
+
 [build]
 command = "npm run build"
 # command = "npm install && npm run build"
