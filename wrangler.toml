@@ -1,4 +1,4 @@
-name = "cfworker-webpack5-typescript"
+name = "luterraBot"
 type = "javascript"
 # wranglers does not support webpack 5
 # type = "webpack" 
