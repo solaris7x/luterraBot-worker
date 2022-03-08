@@ -171,3 +171,4 @@ $RECYCLE.BIN/
 
 package-lock.json
 clutter/
+wrangler.toml
