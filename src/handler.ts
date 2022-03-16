@@ -8,6 +8,7 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
     // Parse request body
     const body = await request.json<any>()
+    console.log(body)
 
     // Verify signature
     if (
@@ -40,7 +41,14 @@ export async function handleRequest(request: Request): Promise<Response> {
     // Generic response
     return new Response(
       JSON.stringify({
-        body,
+        type: 4,
+        data: {
+          tts: false,
+          content: "Beep Boop, I'm a bot and I broke",
+          flags: 1 << 6,
+          embeds: [],
+          allowed_mentions: { parse: [] },
+        },
       }),
       {
         status: 200,
