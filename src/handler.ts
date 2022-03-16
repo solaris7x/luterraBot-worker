@@ -1,3 +1,9 @@
+import InteractionResponse from "../typeHelpers/InteractionResponse"
+import InteractionResponseFlags from "../typeHelpers/InteractionResponse/InteractionResponseFlags"
+import InteractionResponseType from "../typeHelpers/InteractionResponse/InteractionResponseType"
+import InteractionType from "../typeHelpers/InteractionType"
+
+import beep from "./commands/beep"
 import verifySignature from "./utils/verifySignature"
 
 export async function handleRequest(request: Request): Promise<Response> {
@@ -24,10 +30,10 @@ export async function handleRequest(request: Request): Promise<Response> {
     console.log("Signature verified")
 
     // Check if request is ping
-    if (body?.type === 1) {
+    if (body?.type === InteractionType.PING) {
       return new Response(
         JSON.stringify({
-          type: 1,
+          type: InteractionResponseType.PONG,
         }),
         {
           status: 200,
@@ -39,24 +45,32 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
 
     // Generic response
-    return new Response(
-      JSON.stringify({
-        type: 4,
-        data: {
-          tts: false,
-          content: "Beep Boop, I'm a bot and I broke",
-          flags: 1 << 6,
-          embeds: [],
-          allowed_mentions: { parse: [] },
-        },
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    let interactionRes: InteractionResponse = {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        tts: false,
+        content: "💀🗺️ Beep Boop, Maps not working 🗺️💀",
+        flags: InteractionResponseFlags.EPHEMERAL,
+        embeds: [],
+        allowed_mentions: { parse: [] },
+      },
+    }
+
+    // Check if request is command
+    if (body?.type === InteractionType.APPLICATION_COMMAND) {
+      // Check if command is beep
+      if (body?.data?.name === "beep") {
+        interactionRes = beep()
       }
-    )
+    }
+
+    // Send response
+    return new Response(JSON.stringify(interactionRes), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
 
     // End of try block
   } catch (err: any) {
