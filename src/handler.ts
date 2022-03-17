@@ -5,7 +5,7 @@ import {
   MessageFlags,
 } from "discord-api-types/v10"
 
-import beep from "./commands/beep"
+import applicationCommandResolvers from "./applicationCommandResolvers"
 import verifySignature from "./utils/verifySignature"
 
 export async function handleRequest(request: Request): Promise<Response> {
@@ -46,7 +46,7 @@ export async function handleRequest(request: Request): Promise<Response> {
       )
     }
 
-    // Generic response
+    // Default response
     let interactionRes: APIInteractionResponse = {
       type: InteractionResponseType.ChannelMessageWithSource,
       data: {
@@ -60,9 +60,10 @@ export async function handleRequest(request: Request): Promise<Response> {
 
     // Check if request is command
     if (body?.type === InteractionType.ApplicationCommand) {
-      // Check if command is beep
-      if (body?.data?.name === "beep") {
-        interactionRes = beep(null)
+      // Find command in resolvers
+      const resolver = applicationCommandResolvers.get(body?.data?.name)
+      if (resolver) {
+        interactionRes = resolver(body)
       }
     }
 
