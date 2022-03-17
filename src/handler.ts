@@ -23,7 +23,8 @@ export async function handleRequest(request: Request): Promise<Response> {
       !(await verifySignature(
         request.headers.get("x-signature-ed25519") || "",
         request.headers.get("x-signature-timestamp") || "",
-        JSON.stringify(body)
+        JSON.stringify(body),
+        DISCORD_PUBLIC_KEY
       ))
     ) {
       console.log("Signature invalid")
