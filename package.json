@@ -7,6 +7,7 @@
     "start": "webpack",
     "dev": "wrangler dev",
     "build": "webpack",
+    "publish": "wrangler publish",
     "format": "prettier --write  '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
     "lint": "eslint --max-warnings=0 src && prettier --check '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'"
   },
@@ -21,6 +22,7 @@
     "@typescript-eslint/parser": "^5.14.0",
     "axios": "^0.26.0",
     "clean-webpack-plugin": "^4.0.0",
+    "discord-api-types": "^0.29.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.5.1",

@@ -1,7 +1,9 @@
-import InteractionResponse from "../typeHelpers/InteractionResponse"
-import InteractionResponseFlags from "../typeHelpers/InteractionResponse/InteractionResponseFlags"
-import InteractionResponseType from "../typeHelpers/InteractionResponse/InteractionResponseType"
-import InteractionType from "../typeHelpers/InteractionType"
+import {
+  APIInteractionResponse,
+  InteractionResponseType,
+  InteractionType,
+  MessageFlags,
+} from "discord-api-types/v10"
 
 import beep from "./commands/beep"
 import verifySignature from "./utils/verifySignature"
@@ -30,10 +32,10 @@ export async function handleRequest(request: Request): Promise<Response> {
     console.log("Signature verified")
 
     // Check if request is ping
-    if (body?.type === InteractionType.PING) {
+    if (body?.type === InteractionType.Ping) {
       return new Response(
         JSON.stringify({
-          type: InteractionResponseType.PONG,
+          type: InteractionResponseType.Pong,
         }),
         {
           status: 200,
@@ -45,22 +47,22 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
 
     // Generic response
-    let interactionRes: InteractionResponse = {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    let interactionRes: APIInteractionResponse = {
+      type: InteractionResponseType.ChannelMessageWithSource,
       data: {
         tts: false,
         content: "💀🗺️ Beep Boop, Maps not working 🗺️💀",
-        flags: InteractionResponseFlags.EPHEMERAL,
+        flags: MessageFlags.Ephemeral,
         embeds: [],
         allowed_mentions: { parse: [] },
       },
     }
 
     // Check if request is command
-    if (body?.type === InteractionType.APPLICATION_COMMAND) {
+    if (body?.type === InteractionType.ApplicationCommand) {
       // Check if command is beep
       if (body?.data?.name === "beep") {
-        interactionRes = beep()
+        interactionRes = beep(null)
       }
     }
 

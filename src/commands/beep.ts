@@ -1,14 +1,13 @@
-import InteractionResponse from "../../typeHelpers/InteractionResponse"
-import InteractionResponseType from "../../typeHelpers/InteractionResponse/InteractionResponseType"
-import InteractionResponseFlags from "../../typeHelpers/InteractionResponse/InteractionResponseFlags"
+import { InteractionResponseType, MessageFlags } from "discord-api-types/v10"
+import InteractionFunction from "../../typeHelpers/InteractionFunction"
 
-const beep = (): InteractionResponse => {
+const beep: InteractionFunction = () => {
   return {
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    type: InteractionResponseType.ChannelMessageWithSource,
     data: {
       tts: false,
-      content: "Boop",
-      flags: InteractionResponseFlags.EPHEMERAL,
+      content: "🤖 Boop 🤖",
+      flags: MessageFlags.Ephemeral,
       embeds: [],
       allowed_mentions: { parse: [] },
     },
