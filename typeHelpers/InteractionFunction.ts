@@ -1,7 +1,7 @@
-import { APIInteractionResponse } from "discord-api-types/v10"
+import { APIInteractionResponse, APIInteraction } from "discord-api-types/v10"
 
 interface InteractionFunction {
-  (body: any): APIInteractionResponse
+  (body: APIInteraction): APIInteractionResponse
 }
 
 export default InteractionFunction
